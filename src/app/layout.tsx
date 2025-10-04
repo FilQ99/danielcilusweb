@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Daniel Filus | Senior Web Developer & Freelancer",
     description: "Tworzę interaktywne strony internetowe, które pomagają realizować cele biznesowe.",
-    url: "danielfilus.pl", // <-- WAŻNE: Podmień na swoją prawdziwą domenę!
+    url: "https://danielfilus.pl", // <-- WAŻNE: Podmień na swoją prawdziwą domenę!
     siteName: "Daniel Filus - Portfolio",
     images: [
       {
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
   },
   
   // --- Inne ważne tagi ---
-  metadataBase: new URL("danielfilus.pl"), // <-- WAŻNE: Podmień na swoją prawdziwą domenę!
+  metadataBase: new URL("https://danielfilus.pl"), // <-- WAŻNE: Podmień na swoją prawdziwą domenę!
   alternates: {
     canonical: "/", // Link kanoniczny do strony głównej
   },
