@@ -96,10 +96,10 @@ export default function Contact() {
             <label htmlFor="budget-select" className="mb-2 block font-semibold text-text-secondary">Szacowany budżet</label>
             <div className="relative">
               <select id="budget-select" name="budget" className="form-select" required disabled={status === 'loading'}>
-                <option>do 5 000 zł</option>
-                <option>5 000 - 10 000 zł</option>
-                <option>10 000 - 20 000 zł</option>
-                <option>powyżej 20 000 zł</option>
+                <option>do 1 000 zł</option>
+                <option>1000 - 1500 zł</option>
+                <option>1500 - 2000 zł</option>
+                <option>powyżej 2 000 zł</option>
                 <option>Do ustalenia</option>
               </select>
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none" />
