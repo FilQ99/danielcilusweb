@@ -15,7 +15,7 @@ const config: Config = {
         'bg-primary': '#191A1D',
         'bg-secondary': '#242528',
         'text-primary': '#FFFFFF',
-        'text-secondary': '#A9A9AA', // Użyłem text-secondary jako zamiennik var(--text-light)
+        'text-secondary': '#B5B5B6', // Użyłem text-secondary jako zamiennik var(--text-light)
         'bg-light': '#2B2B2B',       // Kolor z Twojego SCSS, używany w gradiencie i ramce
       },
       fontFamily: {

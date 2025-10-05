@@ -76,10 +76,7 @@ export default function Hero() {
             <a href="#process" className="inline-block w-full max-w-xs rounded-lg bg-accent px-8 py-3 font-bold text-bg-primary transition-transform duration-300 hover:scale-105 sm:w-auto">
               Zobacz mój proces
             </a>
-            <div className="flex items-center space-x-6">
-              <a href="https://github.com/FilQ99" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-text-secondary transition-colors hover:text-accent"><Github size={28} /></a>
-              <a href="https://linkedin.com/in/twoj-profil" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-text-secondary transition-colors hover:text-accent"><Linkedin size={28} /></a>
-            </div>
+           
           </motion.div>
         </motion.div>
       </div>

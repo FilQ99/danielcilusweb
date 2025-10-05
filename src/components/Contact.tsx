@@ -4,12 +4,8 @@ import { motion } from "framer-motion";
 import { useState } from 'react';
 import { ChevronDown } from "lucide-react";
 
-const FormField = ({ label, children }: { label: string, children: React.ReactNode }) => (
-  <div className="flex flex-col">
-    <label className="mb-2 font-semibold text-text-secondary">{label}</label>
-    {children}
-  </div>
-);
+// Komponent FormField został usunięty na rzecz bezpośredniego użycia <label> z htmlFor
+// co jest czystszym i bardziej standardowym podejściem do dostępności.
 
 export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -21,12 +17,11 @@ export default function Contact() {
     const formData = new FormData(e.currentTarget);
     const data: { [key: string]: any } = {};
     
-    data['materials'] = [];
+    // Specjalna obsługa checkboxów
+    data['materials'] = formData.getAll('materials');
 
     formData.forEach((value, key) => {
-      if (key === 'materials') {
-        data[key].push(value as string);
-      } else {
+      if (key !== 'materials') {
         data[key] = value;
       }
     });
@@ -69,68 +64,64 @@ export default function Contact() {
             className="max-w-3xl mx-auto bg-bg-secondary p-8 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-6"
         >
           <div className="md:col-span-2">
-            <FormField label="Imię i Nazwisko / Nazwa firmy">
-              <input type="text" name="name" className="form-input" required disabled={status === 'loading'} />
-            </FormField>
+            <label htmlFor="name-input" className="mb-2 block font-semibold text-text-secondary">Imię i Nazwisko / Nazwa firmy</label>
+            <input type="text" id="name-input" name="name" className="form-input" required disabled={status === 'loading'} />
           </div>
 
-          <FormField label="Adres e-mail">
-            <input type="email" name="email" className="form-input" required disabled={status === 'loading'} />
-          </FormField>
-
-          <FormField label="Numer telefonu (opcjonalnie)">
-            <input type="tel" name="phone" className="form-input" disabled={status === 'loading'} />
-          </FormField>
-          
-          <div className="md:col-span-2">
-            <FormField label="Rodzaj projektu, który Cię interesuje">
-              <div className="relative">
-                <select name="project_type" className="form-select" required disabled={status === 'loading'}>
-                  <option>Strona Wizytówka (One Page)</option>
-                  <option>Strona Firmowa (wielostronicowa)</option>
-                  <option>Sklep internetowy (e-commerce)</option>
-                  <option>Aplikacja Webowa / SaaS</option>
-                  <option>Inny</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none" />
-              </div>
-            </FormField>
+          <div>
+            <label htmlFor="email-input" className="mb-2 block font-semibold text-text-secondary">Adres e-mail</label>
+            <input type="email" id="email-input" name="email" className="form-input" required disabled={status === 'loading'} />
           </div>
 
-          <div className="md:col-span-2">
-            <FormField label="Szacowany budżet">
-              <div className="relative">
-                <select name="budget" className="form-select" required disabled={status === 'loading'}>
-                  <option>do 5 000 zł</option>
-                  <option>5 000 - 10 000 zł</option>
-                  <option>10 000 - 20 000 zł</option>
-                  <option>powyżej 20 000 zł</option>
-                  <option>Do ustalenia</option>
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none" />
-              </div>
-            </FormField>
+          <div>
+            <label htmlFor="phone-input" className="mb-2 block font-semibold text-text-secondary">Numer telefonu (opcjonalnie)</label>
+            <input type="tel" id="phone-input" name="phone" className="form-input" disabled={status === 'loading'} />
           </div>
           
           <div className="md:col-span-2">
-            <FormField label="Link do strony, która Ci się podoba (opcjonalnie)">
-              <input type="url" name="inspiration_url" className="form-input" placeholder="https://przykladowastrona.pl" disabled={status === 'loading'} />
-            </FormField>
-          </div>
-          
-          <div className="md:col-span-2">
-            <FormField label="Co konkretnie podoba Ci się w tej stronie?">
-              <textarea name="inspiration_details" rows={3} className="form-textarea" placeholder="Np. układ sekcji, animacje, kolorystyka..." disabled={status === 'loading'}></textarea>
-            </FormField>
+            <label htmlFor="project-type-select" className="mb-2 block font-semibold text-text-secondary">Rodzaj projektu, który Cię interesuje</label>
+            <div className="relative">
+              <select id="project-type-select" name="project_type" className="form-select" required disabled={status === 'loading'}>
+                <option>Strona Wizytówka (One Page)</option>
+                <option>Strona Firmowa (wielostronicowa)</option>
+                <option>Sklep internetowy (e-commerce)</option>
+                <option>Aplikacja Webowa / SaaS</option>
+                <option>Inny</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none" />
+            </div>
           </div>
 
           <div className="md:col-span-2">
-            <label className="mb-2 font-semibold text-text-secondary block">Posiadane materiały</label>
+            <label htmlFor="budget-select" className="mb-2 block font-semibold text-text-secondary">Szacowany budżet</label>
+            <div className="relative">
+              <select id="budget-select" name="budget" className="form-select" required disabled={status === 'loading'}>
+                <option>do 5 000 zł</option>
+                <option>5 000 - 10 000 zł</option>
+                <option>10 000 - 20 000 zł</option>
+                <option>powyżej 20 000 zł</option>
+                <option>Do ustalenia</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-secondary pointer-events-none" />
+            </div>
+          </div>
+          
+          <div className="md:col-span-2">
+            <label htmlFor="inspiration-url-input" className="mb-2 block font-semibold text-text-secondary">Link do strony, która Ci się podoba (opcjonalnie)</label>
+            <input type="url" id="inspiration-url-input" name="inspiration_url" className="form-input" placeholder="https://przykladowastrona.pl" disabled={status === 'loading'} />
+          </div>
+          
+          <div className="md:col-span-2">
+            <label htmlFor="inspiration-details-textarea" className="mb-2 block font-semibold text-text-secondary">Co konkretnie podoba Ci się w tej stronie?</label>
+            <textarea id="inspiration-details-textarea" name="inspiration_details" rows={3} className="form-textarea" placeholder="Np. układ sekcji, animacje, kolorystyka..." disabled={status === 'loading'}></textarea>
+          </div>
+
+          <div className="md:col-span-2">
+            <span className="mb-2 font-semibold text-text-secondary block">Posiadane materiały</span>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {['Teksty', 'Zdjęcia/Grafiki', 'Logo', 'Domena/Hosting'].map(item => (
-                    // NOWA, PROSTSZA STRUKTURA DLA CHECKBOXA
-                    <label key={item} className={`flex items-center space-x-3 bg-bg-primary p-4 rounded-lg cursor-pointer hover:border-accent/50 border-2 border-transparent transition-all ${status === 'loading' ? 'opacity-50 cursor-not-allowed' : ''}`}>
-                        <input type="checkbox" name="materials" value={item} className="form-checkbox" disabled={status === 'loading'} />
+                    <label key={item} htmlFor={`checkbox-${item}`} className={`flex items-center space-x-3 bg-bg-primary p-4 rounded-lg cursor-pointer hover:border-accent/50 border-2 border-transparent transition-all ${status === 'loading' ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                        <input type="checkbox" id={`checkbox-${item}`} name="materials" value={item} className="form-checkbox" disabled={status === 'loading'} />
                         <span className="text-sm text-text-primary">{item}</span>
                     </label>
                 ))}
@@ -138,9 +129,8 @@ export default function Contact() {
           </div>
 
           <div className="md:col-span-2">
-            <FormField label="Dodatkowe informacje o projekcie">
-              <textarea name="message" rows={5} className="form-textarea" placeholder="Czym ma się zajmować Twoja strona, kto jest Twoim klientem docelowym, jakie funkcje są kluczowe?" disabled={status === 'loading'}></textarea>
-            </FormField>
+            <label htmlFor="message-textarea" className="mb-2 block font-semibold text-text-secondary">Dodatkowe informacje o projekcie</label>
+            <textarea id="message-textarea" name="message" rows={5} className="form-textarea" placeholder="Czym ma się zajmować Twoja strona, kto jest Twoim klientem docelowym, jakie funkcje są kluczowe?" disabled={status === 'loading'}></textarea>
           </div>
           
           <div className="md:col-span-2 text-right min-h-[48px] flex items-center justify-end">
