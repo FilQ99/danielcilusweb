@@ -19,7 +19,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   // --- Podstawowe SEO ---
-  title: "Daniel Filus | Senior Web Developer & Freelancer",
+  title: "Daniel Filus | Web Developer & Freelancer",
   description: "Projektuję i koduję nowoczesne, interaktywne strony internetowe, które przyciągają klientów i realizują cele biznesowe. Zobacz moje portfolio i proces współpracy.",
   keywords: "web developer, freelancer, strony internetowe, Next.js, React, TypeScript, Opole, tworzenie stron",
   
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 
   // --- Open Graph (dla mediów społecznościowych) ---
   openGraph: {
-    title: "Daniel Filus | Senior Web Developer & Freelancer",
+    title: "Daniel Filus | Web Developer & Freelancer",
     description: "Tworzę interaktywne strony internetowe, które pomagają realizować cele biznesowe.",
     url: "https://danielfilus.pl",
     siteName: "Daniel Filus - Portfolio",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Daniel Filus - Senior Web Developer Portfolio",
+        alt: "Daniel Filus - Web Developer Portfolio",
       },
     ],
     locale: "pl_PL",
