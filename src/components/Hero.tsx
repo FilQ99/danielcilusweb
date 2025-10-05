@@ -1,22 +1,19 @@
 // src/components/Hero.tsx
 "use client";
 
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Github, Linkedin, ChevronDown } from "lucide-react";
-import InteractiveGrid from "./InteractiveGrid";
-import React, { useRef, useState } from "react";
+import React from "react";
 
-// Definicje animacji (bez zmian)
+// Definicje animacji
 const typingContainer: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.04 } },
 };
-
 const typingLetter: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
-
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
@@ -29,50 +26,16 @@ const itemVariants = {
 export default function Hero() {
   const textToAnimateDesktop = "Projektuję i koduję interaktywne doświadczenia.";
   const staticTextMobile = "Tworzę nowoczesne strony internetowe.";
-
   const descriptionText = "Specjalizuję się w szybkich, intuicyjnych rozwiązaniach, które realizują cele biznesowe.";
-
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-
-  // === ZMIANA #1: USUNIĘCIE ZMIENNEJ PARALAKSY ===
-  // const textY = useTransform(scrollYProgress, [0, 1], ["0%", "150%"]); // TA LINIA ZOSTAŁA USUNIĘTA
-  
-  // Efekt zanikania tła pozostaje, bo jest elegancki i subtelny
-  const backgroundOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-  
-  const [touchPosition, setTouchPosition] = useState({ x: -100, y: -100 });
-
-  const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
-    const touch = event.touches[0];
-    setTouchPosition({ x: touch.clientX, y: touch.clientY });
-  };
-  
-  const handleTouchEnd = () => {
-    setTouchPosition({ x: -100, y: -100 });
-  };
 
   return (
     <section
-      ref={heroRef}
       id="hero"
-      className="relative flex h-[100svh] flex-col items-center justify-center overflow-hidden bg-bg-primary text-center"
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
+      // Sekcja jest teraz przezroczysta, tło jest pod nią
+      className="relative flex h-[100svh] flex-col items-center justify-center overflow-hidden text-center"
     >
-      {/* Tła (bez zmian) */}
-      <motion.div className="absolute inset-0 z-0 hidden lg:block" style={{ opacity: backgroundOpacity }}><div className="absolute left-1/2 top-1/2 h-[120vh] w-[120vh] -translate-x-1/2 -translate-y-1/2"><div className="h-full w-full animate-spin bg-radar-soft-gradient opacity-20 blur-3xl" style={{ animationDuration: '15s' }} /></div><InteractiveGrid /></motion.div>
-      <motion.div className="absolute inset-0 z-0 block lg:hidden" style={{ opacity: backgroundOpacity, background: `radial-gradient(circle 250px at ${touchPosition.x}px ${touchPosition.y}px, rgba(186, 221, 120, 0.15), transparent)` }}><InteractiveGrid /></motion.div>
-
       {/* ===== WARSTWA TREŚCI ===== */}
-      <motion.div
-        // === ZMIANA #2: USUNIĘCIE STYLU PARALAKSY ===
-        // style={{ y: textY }} // TA WŁAŚCIWOŚĆ ZOSTAŁA USUNIĘTA
-        className="container relative z-10 mx-auto px-4"
-      >
+      <div className="container relative z-10 mx-auto px-4">
         <motion.div
           initial="hidden"
           animate="visible"
@@ -83,7 +46,6 @@ export default function Hero() {
               Cześć, jestem Daniel.
             </h1>
             
-            {/* Wersja Desktop: długa, z animacją */}
             <motion.h2
               className="mt-2 hidden text-[clamp(1.5rem,4vw,2.5rem)] font-bold text-accent leading-tight text-balance lg:block"
               variants={typingContainer}
@@ -95,7 +57,6 @@ export default function Hero() {
               ))}
             </motion.h2>
 
-            {/* Wersja Mobile: krótka, statyczna */}
             <h2 className="mt-2 block text-[clamp(1.4rem,6vw,1.8rem)] font-bold text-accent leading-tight text-balance lg:hidden">
               {staticTextMobile}
             </h2>
@@ -115,15 +76,20 @@ export default function Hero() {
             <a href="#process" className="inline-block w-full max-w-xs rounded-lg bg-accent px-8 py-3 font-bold text-bg-primary transition-transform duration-300 hover:scale-105 sm:w-auto">
               Zobacz mój proces
             </a>
-           
+            <div className="flex items-center space-x-6">
+              <a href="https://github.com/FilQ99" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-text-secondary transition-colors hover:text-accent"><Github size={28} /></a>
+              <a href="https://linkedin.com/in/twoj-profil" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-text-secondary transition-colors hover:text-accent"><Linkedin size={28} /></a>
+            </div>
           </motion.div>
         </motion.div>
-      </motion.div>
+      </div>
 
-      {/* Wskaźnik scrollowania (bez zmian) */}
+      {/* Wskaźnik scrollowania */}
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1 }}
         className="absolute bottom-10 left-1/2 z-10 -translate-x-1/2"
-        style={{ opacity: backgroundOpacity }}
       >
         <ChevronDown size={28} className="animate-bounce text-text-secondary" />
       </motion.div>

@@ -4,19 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === Warstwa 1: Style bazowe i dla formularzy (Twoje oryginalne style) === */
 @layer base {
-  /* Definiujemy wygląd wszystkich naszych pól formularza */
   .form-input, .form-select, .form-textarea {
     @apply w-full rounded-lg border-2 border-white/20 bg-bg-primary p-3 text-text-primary transition-all duration-200;
     @apply focus:border-accent focus:ring-2 focus:ring-accent/50 focus:outline-none;
   }
-
-  /* Specjalne style dla selectów - ukrywamy domyślną strzałkę */
   .form-select {
     @apply appearance-none;
   }
-
-  /* Style dla checkboxów - te są już poprawne */
   .form-checkbox {
     @apply appearance-none;
     @apply inline-block h-5 w-5 flex-shrink-0 rounded border-2 border-white/30 bg-bg-primary align-middle;
@@ -29,23 +25,40 @@
     background-repeat: no-repeat;
   }
 
-  /* ======================================================================== */
-  /* ===== OSTATECZNE ROZWIĄZANIE PROBLEMU Z AUTOCOMPLETION W CHROME ====== */
-  /* ======================================================================== */
-
-  /* 1. Definiujemy animację, która nic nie robi, ale "resetuje" style */
   @keyframes autofill {
     to {
       color: theme('colors.text-primary');
       background: theme('colors.bg-primary');
     }
   }
-
-  /* 2. Aplikujemy tę animację do pól z autouzupełnianiem */
   .form-input:-webkit-autofill {
-    /* Ustawiamy animację z bardzo długim opóźnieniem */
     animation-name: autofill;
     animation-fill-mode: both;
     transition: background-color 5000s ease-in-out 0s;
   }
+}
+
+/* === Warstwa 2: Niestandardowe komponenty (TUTAJ JEST NASZA POPRAWKA) === */
+@layer components {
+  .aurora-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, theme('colors.accent/0.3'), transparent),
+      radial-gradient(ellipse 50% 80% at 20% 120%, #064e3b, transparent),
+      radial-gradient(ellipse 50% 80% at 90% 110%, theme('colors.accent/0.2'), transparent);
+    background-size: 200% 200%;
+    animation: aurora-animation 20s ease-in-out infinite;
+    opacity: 0.8; /* Zwiększona widoczność dla pewności */
+  }
+}
+
+/* Definicja animacji - teraz jest na zewnątrz warstw, co jest bezpieczniejsze */
+@keyframes aurora-animation {
+  0% { background-position: 50% 0%; }
+  50% { background-position: 50% 100%; }
+  100% { background-position: 50% 0%; }
 }
