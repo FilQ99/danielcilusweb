@@ -4,8 +4,7 @@ import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import ScrollProgressBar from "@/components/ScrollProgressBar";
-// Nie potrzebujemy już komponentu BackgroundAurora
-// import BackgroundAurora from "@/components/BackgroundAurora"; 
+import { Analytics } from '@vercel/analytics/react'; // Import komponentu Analytics
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -19,11 +18,69 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  // ... Twoje metadane pozostają bez zmian ...
+  // --- Podstawowe SEO ---
   title: "Daniel Filus | Senior Web Developer & Freelancer",
   description: "Projektuję i koduję nowoczesne, interaktywne strony internetowe, które przyciągają klientów i realizują cele biznesowe. Zobacz moje portfolio i proces współpracy.",
-  // ... reszta metadanych ...
+  keywords: "web developer, freelancer, strony internetowe, Next.js, React, TypeScript, Opole, tworzenie stron",
+  
+  // --- Autor i Prawa Autorskie ---
+  authors: [{ name: "Daniel Filus" }],
+  creator: "Daniel Filus",
+  publisher: "Daniel Filus",
+  
+  // --- Ustawienia dla Robotów Wyszukiwarek ---
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+
+  // --- Open Graph (dla mediów społecznościowych) ---
+  openGraph: {
+    title: "Daniel Filus | Senior Web Developer & Freelancer",
+    description: "Tworzę interaktywne strony internetowe, które pomagają realizować cele biznesowe.",
+    url: "https://danielfilus.pl",
+    siteName: "Daniel Filus - Portfolio",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Daniel Filus - Senior Web Developer Portfolio",
+      },
+    ],
+    locale: "pl_PL",
+    type: "website",
+  },
+
+  // --- Twitter Card (dla podglądów na Twitterze) ---
+  twitter: {
+    card: "summary_large_image",
+    title: "Daniel Filus | Web Developer & Freelancer",
+    description: "Tworzę interaktywne strony internetowe, które pomagają realizować cele biznesowe.",
+    images: ["/og-image.png"],
+  },
+  
+  // --- Favicon i Ikony ---
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  
+  // --- Inne ważne tagi ---
+  metadataBase: new URL("https://danielfilus.pl"),
+  alternates: {
+    canonical: "/",
+  },
 };
+
 
 export default function RootLayout({
   children,
@@ -32,16 +89,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl" className="!scroll-smooth">
-      {/*
-        === OSTATECZNA POPRAWKA ===
-        Dodajemy klasę `aurora-bg` BEZPOŚREDNIO do elementu <body>.
-        To jest najczystsze i najbardziej niezawodne rozwiązanie.
-      */}
       <body 
         className={`${poppins.variable} ${inter.variable} bg-bg-primary font-sans text-text-primary relative overflow-x-hidden aurora-bg`}
       >
         <ScrollProgressBar />
         {children}
+        <Analytics /> {/* Komponent Vercel Analytics dodany na końcu <body> */}
       </body>
     </html>
   );
